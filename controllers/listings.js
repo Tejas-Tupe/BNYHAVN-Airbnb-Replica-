@@ -153,10 +153,7 @@ async function editlistingpost(req, res, next) {
             else {
                 console.log('mapbox failed here')
             }
-    
-           let testing = await mongodb.listing.findById(id);
-            console.log(testing)
-               // updating 
+
             res.redirect('/listings')
         }
         else {
