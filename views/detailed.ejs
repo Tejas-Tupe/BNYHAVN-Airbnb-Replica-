@@ -1,0 +1,161 @@
+<% layout('layouts/boilerplate') %>
+<div class="card mb-5 mx-auto custom-card border-0 shadow-sm rounded-4 overflow-hidden" style="max-width: 700px;">
+  <div class="position-relative">
+    <img src="<%= object.image.path %>" class="card-img-top img-fluid object-fit-cover" alt="listing image" style="height: 280px;">
+    <div class=" position-absolute top-0 start-0 w-100 h-100"></div>
+  </div>
+
+  <div class="card-body px-4 py-3">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <h5 class="card-title fw-bold mb-1"><%= object.description %></h5>
+        <p class="text-muted mb-2">
+          <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
+          <%= object.location %>, <%= object.country %>
+        </p>
+      </div>
+      <div class="text-end">
+        <span class="badge bg-light text-dark border fs-6">
+          <%= Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(object.price) %>
+        </span>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center mt-3 mb-2">
+      <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 35px; height: 35px;">
+        <i class="bi bi-person-fill"></i>
+      </div>
+      <small class="ms-2 text-muted">by <%= object.owner.email %></small>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+      <% if (editdeletebutton == true) { %>
+        <a href="/listings/edit/<%= object.id %>" class="btn btn-outline-primary px-4 py-2 rounded-pill">Edit</a>
+        <form id="deleteform" method="post" action="/listings/delete/<%= object.id %>?_method=DELETE">
+          <button class="btn btn-outline-danger px-4 py-2 rounded-pill">Delete</button>
+        </form>
+      <% } %>
+      <button data-bs-toggle="modal" data-bs-target="#ReviewModal" class="btn btn-primary px-4 py-2 rounded-pill">
+        Add Review
+      </button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Review Modal -->
+  <div class="modal fade" id="ReviewModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title fw-bold" id="ModalLabel">Leave a Review</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form method="post" action="/reviews/<%=object._id%>" class="needs-validation" novalidate>
+          <div class="modal-body py-3 px-4">
+
+            <!-- Star Rating using Starability -->
+            <fieldset class="starability-grow mb-4">
+              <legend class="form-label mb-2">Your Rating:</legend>
+              <input type="radio" id="rate-0" class="input-no-rate" name="rating" value="0" checked
+                aria-label="No rating." />
+              <input type="radio" id="rate-1" name="rating" value="1" />
+              <label for="rate-1" title="Terrible">1 star</label>
+              <input type="radio" id="rate-2" name="rating" value="2" />
+              <label for="rate-2" title="Not good">2 stars</label>
+              <input type="radio" id="rate-3" name="rating" value="3" />
+              <label for="rate-3" title="Average">3 stars</label>
+              <input type="radio" id="rate-4" name="rating" value="4" />
+              <label for="rate-4" title="Very good">4 stars</label>
+              <input type="radio" id="rate-5" name="rating" value="5" />
+              <label for="rate-5" title="Amazing">5 stars</label>
+            </fieldset>
+
+            <!-- Comment Box -->
+            <div class="mb-3">
+              <label for="message-text" class="form-label">Your Comment</label>
+              <textarea required name="Comment" class="form-control rounded-3" id="message-text" rows="4"
+                placeholder="Share your thoughts..."></textarea>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer border-top-0 px-4 pb-4">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary px-4">Submit Review</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="card-header fw-bold fs-5">
+      Reviews
+    </div>
+    
+    <div class="row row-cols-1 g-3 px-3 mt-3">
+      <% for (const element of reviews) { %>
+        <div class="col">
+          <div class="card border-0 shadow-sm p-3 rounded-4 review-card">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 45px; height: 45px;">
+                  <i class="bi bi-person-fill fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1"><%= element.reviewowner.email %></h6>
+                  <small class="text-muted">Rated on: <%= new Date(element.createdAt).toLocaleDateString() %></small>
+                </div>
+              </div>
+              <form method="post" action="/reviews/delete/<%= object._id %>/<%= element._id %>?_method=DELETE">
+                <button class="btn btn-outline-danger btn-sm rounded-circle">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </div>
+    
+            <div class="mt-2">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <% if (i <= element.reviewCount) { %>
+                  <i class="fas fa-star text-warning"></i>
+                <% } else { %>
+                  <i class="far fa-star text-muted"></i>
+                <% } %>
+              <% } %>
+              <span class="ms-2 text-muted"><%= element.reviewCount %> stars</span>
+            </div>
+    
+            <p class="mt-2 text-muted fs-6">
+              <%= element.comment %>
+            </p>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+
+      <!-- map Box code started-->
+      <div class="card mb-5 mx-auto shadow-sm border-0" style="max-width: 720px;">
+        <h3>Where you'll be</h3>
+        <div id="map" class="rounded-4"></div>
+      </div>
+
+
+      <!-- some Script code for map-->
+      <script>
+        mapboxgl.accessToken = '<%= Map_token %>';  // this only client side code remember not include in server side code 
+        const map = new mapboxgl.Map({
+          container: 'map', // container ID
+          center: ['<%=longitude%>','<%=latitude%>'], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+          zoom: 9 // starting zoom                    // receiving this coordinates from the new listing create route
+        });
+
+        const marker = new mapboxgl.Marker()  // this particular function help to add marker / Pointer to targeted location 
+        .setLngLat(['<%=longitude%>','<%=latitude%>']) // passing targeted location via longitude and laltitude
+        .setPopup(new mapboxgl.Popup({offset:30}) // The Pop up will be appear on the marker after adding this funcion SetPopUp
+        .setHTML('<p>Exact Location after Booking</p>')) 
+        .addTo(map);
+      </script>

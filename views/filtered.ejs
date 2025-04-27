@@ -1,0 +1,86 @@
+<% layout('/layouts/boilerplate') %>
+    <div class="filter-bar">
+        <button class="filter-btn" data-category="all"><i class="fas fa-globe"></i><span>All</span></button>
+        <button class="filter-btn" data-category="hotel"><i class="fas fa-hotel"></i><span>Hotel</span></button>
+        <button class="filter-btn" data-category="farm"><i class="fas fa-tractor"></i><span>Farm</span></button>
+        <button class="filter-btn" data-category="apartment"><i class="fas fa-building"></i><span>Apartment</span></button>
+        <button class="filter-btn" data-category="rental"><i class="fas fa-house-user"></i><span>Rental</span></button>
+        <button class="filter-btn" data-category="beach"><i class="fas fa-umbrella-beach"></i><span>Beach</span></button>
+        <button class="filter-btn" data-category="mountain"><i class="fas fa-mountain"></i><span>Mountain</span></button>
+        <button class="filter-btn" data-category="cabin"><i class="fas fa-campground"></i><span>Cabin</span></button>
+        <button class="filter-btn" data-category="desert"><i class="fas fa-sun"></i><span>Desert</span></button>
+        <button class="filter-btn" data-category="lake"><i class="fas fa-water"></i><span>Lake</span></button>
+        <button class="filter-btn" data-category="tiny-home"><i class="fas fa-home"></i><span>Tiny Home</span></button>
+        <button class="filter-btn" data-category="castle"><i class="fas fa-chess-rook"></i><span>Castle</span></button>
+        <button class="filter-btn" data-category="boat"><i class="fas fa-ship"></i><span>Boat</span></button>
+        <button class="filter-btn" data-category="treehouse"><i class="fas fa-tree"></i><span>Treehouse</span></button>
+        <button class="filter-btn" data-category="skiing"><i class="fas fa-skiing"></i><span>Skiing</span></button>
+        <button class="filter-btn" data-category="camping"><i class="fas fa-campground"></i><span>Camping</span></button>
+        <button class="filter-btn" data-category="luxury"><i class="fas fa-gem"></i><span>Luxury</span></button>
+        <button class="filter-btn" data-category="city"><i class="fas fa-city"></i><span>City</span></button>
+        <button class="filter-btn" data-category="vintage"><i class="fas fa-couch"></i><span>Vintage</span></button>
+        <button class="filter-btn" data-category="eco"><i class="fas fa-leaf"></i><span>Eco</span></button>
+        <button class="filter-btn" data-category="historic"><i class="fas fa-landmark"></i><span>Historic</span></button>
+        <button class="filter-btn" data-category="island"><i class="fas fa-mountain-sun"></i><span>Island</span></button>
+    </div>
+
+ 
+    
+    <div class="container">
+            <% for (const element of listings) { %>
+                <div class="card" style="width: 18rem;">
+                    <a href="/listings/<%=element.id%>"><img src="<%= element.image.path %>" class="card-img-top"
+                            id="listingimage" alt="image not available"></a>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= element.title %>
+                        </h5>
+                        <p class="card-text">
+                        </p>
+                        <p class="card-text">
+                            &#8377 <%=Number(element.price).toLocaleString('en-IN')%>/night
+                        </p>
+                    </div>
+                </div>
+                <% } %>    
+    </div>
+
+    <style>
+        /* Fix card sizing in index layout */
+        .container .card {
+            width: 25rem;
+            flex: 0 0 auto;
+            margin: 1rem;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .container .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Consistent image sizing */
+        .card-img-top {
+            height: 220px;
+            /* or 250px for more emphasis */
+            object-fit: cover;
+            width: 100%;
+            border-radius: 0;
+        }
+    </style>
+
+    <script>
+        // for filtering listings
+        document.addEventListener("DOMContentLoaded", () => { // very helpful approch get specfic details without using a form 
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const category = button.getAttribute('data-category');
+                    window.location.href = `/listings/listingsfilter/${category}`; // this method helps to send a get request window.location.href
+                });
+            });
+        });
+    </script>

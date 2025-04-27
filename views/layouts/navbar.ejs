@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="/BNYHAVN/public/stylefiles/style.css">
+<!-- New User Sign Up Pop-up Modal -->
+<div class="modal fade" id="NewUserModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 rounded-4 shadow">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-4 fw-semibold" id="ModalLabel">Create an Account</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body px-4">
+        <form method="post" action="newuser/register" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="user-email" class="form-label">Email</label>
+            <input required name="useremail" type="email" class="form-control rounded-3" id="user-email">
+          </div>
+          <div class="mb-3">
+            <label for="user-name" class="form-label">Username</label>
+            <input required name="username" type="text" class="form-control rounded-3" id="user-name">
+          </div>
+          <div class="mb-3">
+            <label for="user-password" class="form-label">Password</label>
+            <input required name="userpassword" type="password" class="form-control rounded-3" id="user-password">
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-danger rounded-3 px-4">Sign Up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Login Pop-up Modal -->
+<div class="modal fade" id="UserloginModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 rounded-4 shadow">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-4 fw-semibold" id="ModalLabel">Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body px-4">
+        <form method="post" action="/user/login" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="login-email" class="form-label">Email</label>
+            <input required name="username" type="email" class="form-control rounded-3" id="login-email">
+          </div>
+          <div class="mb-3">
+            <label for="login-password" class="form-label">Password</label>
+            <input required name="password" type="password" class="form-control rounded-3" id="login-password">
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-danger rounded-3 px-4">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Nav Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container-fluid px-4 py-2">
+    <a class="navbar-brand" id="logo" href="/listings">BNY-HAVN</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+      <!-- Left Side: Logo + Add Listings -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link add-listing-btn d-flex align-items-center gap-1" href="/listings/new">
+            <i class="fa-solid fa-plus"></i> Add Listings
+          </a>
+        </li>
+      </ul>
+    
+      <!-- Right Side: Login / Sign Up / Logout -->
+      <div class="d-flex align-items-center gap-2">
+        <% if(!currentuser) { %>
+          <button type="button" class="btn btn-outline-danger rounded-3" data-bs-toggle="modal" data-bs-target="#UserloginModal">
+            Login
+          </button>
+          <button type="button" class="btn btn-danger rounded-3" data-bs-toggle="modal" data-bs-target="#NewUserModal">
+            Sign Up
+          </button>
+        <% } %>
+        <% if (currentuser) { %>
+          <form action="/user/logout">
+            <button class="btn btn-outline-danger rounded-3">
+              Logout
+            </button>
+          </form>
+        <% } %>
+      </div>
+    </div>    
+</nav>
+
+<script src='/BNYHAVN/public/JSfiles/script.js'></script>

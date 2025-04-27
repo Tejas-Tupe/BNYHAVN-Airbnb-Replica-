@@ -1,0 +1,41 @@
+<% if(ListingAdded.length> 0) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= ListingAdded %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% } %>
+
+    <% if(DelteListings.length> 0) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= DelteListings %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% } %>
+
+        <% if(error.length> 0) { %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <% } %>
+
+          <% if(listingsFlashes.length> 0) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= listingsFlashes %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
+            <% if(userloginflash.length> 0) { %>
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= userloginflash %>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <% } %>
+
+              <% if(userlogout.length> 0) { %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <%= userlogout %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>

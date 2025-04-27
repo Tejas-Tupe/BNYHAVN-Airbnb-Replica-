@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate') %>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #f8f9fa;">
+    <div class="col-md-6">
+        <div class="card shadow-lg p-4 border-0 rounded-4" style="background-color: #ffffff;">
+            <h3 class="text-center mb-4 fw-bold" style="font-family: 'Helvetica Neue', sans-serif;">Edit Listing</h3>
+
+            <form method="post" action="http://localhost:10000/listings/edit/<%=current._id%>?_method=PATCH" class="needs-validation" novalidate enctype="multipart/form-data">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <input class="form-control rounded-3" type="text" value="<%=current.title%>" required name="title" placeholder="Enter title">
+                    </div>
+
+                    <div class="col-12">
+                        <input class="form-control rounded-3" type="text" value="<%=current.description%>" required name="description" placeholder="Enter description">
+                    </div>
+
+                    <div class="col-12">
+                        <select class="form-select rounded-3" name="category" id="categorySelect" required>
+                            <option value="hotel" <%= current.category === 'hotel' ? 'selected' : '' %>>Hotel</option>
+                            <option value="farm" <%= current.category === 'farm' ? 'selected' : '' %>>Farm</option>
+                            <option value="apartment" <%= current.category === 'apartment' ? 'selected' : '' %>>Apartment</option>
+                            <option value="rental" <%= current.category === 'rental' ? 'selected' : '' %>>Rental</option>
+                            <option value="beach" <%= current.category === 'beach' ? 'selected' : '' %>>Beach</option>
+                            <option value="mountain" <%= current.category === 'mountain' ? 'selected' : '' %>>Mountain</option>
+                            <option value="cabin" <%= current.category === 'cabin' ? 'selected' : '' %>>Cabin</option>
+                            <option value="desert" <%= current.category === 'desert' ? 'selected' : '' %>>Desert</option>
+                            <option value="lake" <%= current.category === 'lake' ? 'selected' : '' %>>Lake</option>
+                            <option value="tiny-home" <%= current.category === 'tiny-home' ? 'selected' : '' %>>Tiny Home</option>
+                            <option value="castle" <%= current.category === 'castle' ? 'selected' : '' %>>Castle</option>
+                            <option value="boat" <%= current.category === 'boat' ? 'selected' : '' %>>Boat</option>
+                            <option value="treehouse" <%= current.category === 'treehouse' ? 'selected' : '' %>>Treehouse</option>
+                            <option value="skiing" <%= current.category === 'skiing' ? 'selected' : '' %>>Skiing</option>
+                            <option value="camping" <%= current.category === 'camping' ? 'selected' : '' %>>Camping</option>
+                            <option value="luxury" <%= current.category === 'luxury' ? 'selected' : '' %>>Luxury</option>
+                            <option value="city" <%= current.category === 'city' ? 'selected' : '' %>>City</option>
+                            <option value="vintage" <%= current.category === 'vintage' ? 'selected' : '' %>>Vintage</option>
+                            <option value="eco" <%= current.category === 'eco' ? 'selected' : '' %>>Eco</option>
+                            <option value="historic" <%= current.category === 'historic' ? 'selected' : '' %>>Historic</option>
+                            <option value="island" <%= current.category === 'island' ? 'selected' : '' %>>Island</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input class="form-control rounded-3" type="text" value="<%=current.price%>" required name="price" placeholder="Enter price">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input class="form-control rounded-3" type="text" value="<%=current.location%>" required name="location" placeholder="Enter location">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input class="form-control rounded-3" type="text" value="<%=current.country%>" required name="country" placeholder="Enter country">
+                    </div>
+
+                    <div class="col-12">
+                        <div class="position-relative border rounded-4 p-3 shadow-sm" style="background-color: #f1f3f5; min-height: 250px; display: flex; align-items: center; justify-content: center;">
+                            <img src="<%= current.image.path %>" alt="Current Image" class="img-fluid rounded-3" style="max-height: 230px; max-width: 100%; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <span class="position-absolute top-0 end-0 badge bg-secondary mt-2 me-2" style="font-size: 0.75rem;">Current Image</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <input class="form-control rounded-3" type="file" name="editedimage">
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <button class="btn btn-dark w-100 rounded-3 py-2 fw-semibold">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
