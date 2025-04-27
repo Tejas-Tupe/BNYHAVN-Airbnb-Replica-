@@ -22,6 +22,7 @@ let passport = require('passport');
 let localPassport = require('passport-local')
 let customerrors = require('./init/errroclass.js');
 let User = require('./databasefiles/db.js');
+let mongodb = require('./databasefiles/db.js');
 
 let AtlasUrl = process.env.Atlas_Link;
 
@@ -72,8 +73,9 @@ app.listen(10000, (req, res) => {
     console.log('Server is started on port 10,000');
 })
 
-app.get('/', (req, res) => {
-    res.send('server working with status code: 200')
+app.get('/', async(req, res) => {
+   let listings = await mongodb.listing.find({});
+           res.render('index.ejs', { listings })
 })
 
 app.use('/listings',Router.listings);
